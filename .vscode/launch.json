@@ -1,0 +1,19 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/hania/studia/med/SPADE/spade/miner.py",
+            "args": ["--dataset", "/home/hania/studia/med/SPADE/dataset_online_retail_II.csv",
+                 "--support", "2",
+                "--max-depth", "3"],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
