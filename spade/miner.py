@@ -1,5 +1,6 @@
 from collections import defaultdict
 from utils import *
+import argparse, sys
 
 def mine(df, min_support):
     # df with columns Id, Date, Products
@@ -20,11 +21,23 @@ def mine(df, min_support):
 
     return
 
+
+def main(argv):
+    parser = argparse.ArgumentParser(description=
+            'Spade algorithm'
+            )
+
+    parser.add_argument('--dataset',dest='df_filename',help='Filename of Online Retail Dataset II',required=True)
+    parser.add_argument('--support',dest='min_support',type=int,help='Minimum support',required=True)
+    args = parser.parse_args(argv)
+    #MIN_SUPPORT = 2
+    df = parse_online_retail(args.df_filename)
+
+    mine(df, args.min_support)
+
+
 if __name__ == "__main__":
 
-    MIN_SUPPORT = 2
-    df = parse_online_retail()
-
-    mine(df, MIN_SUPPORT)
+    main(sys.argv[1:])
 
 
