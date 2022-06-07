@@ -35,11 +35,11 @@ Contains test datasets:
 
 ## Directory /original
 
-Contains code to test and compare performance between implemenatations and to convert dataset to other formats.
+Contains code to test original implementantion using pycspade wrapper and to convert dataset to pycspade supported fromat <https://pypi.org/project/pycspade/>.
 
 ## Results
 
-To shorten computation time test were performed on first 50 rows.
+To shorten computation time test were performed on first 50 rows. Results were shortened to maximum sequence length of 2 for simpler comparison and because original implementation does not mine longer sequences.
 
 ### Original implementation
 
@@ -67,22 +67,22 @@ To shorten computation time test were performed on first 50 rows.
 
 ### Our Results
 
-
+```pre
 Frequent single sets:
-<span style="color:red">(('SPACEBOY GIFT WRAP',),)</span>
-<span style="color:red">(('REGENCY CAKESTAND 3 TIER',),)</span>
-<span style="color:red">(('POSTAGE',),)</span>
-<span style="color:red">(('SWEETHEART CERAMIC TRINKET BOX',),)</span>
-<span style="color:red">(('STRAWBERRY CERAMIC TRINKET BOX',),)</span>
-<span style="color:red">(('PINK HEART SHAPE EGG FRYING PAN',),)</span>
-<span style="color:red">(('BIG DOUGHNUT FRIDGE MAGNETS',),)</span>
-<span style="color:red">(('PLASTERS IN TIN VINTAGE PAISLEY ',),)</span>
-<span style="color:red">(('ROUND SNACK BOXES SET OF4 WOODLAND ',),)</span>
-<span style="color:red">(('CERAMIC STRAWBERRY CAKE MONEY BANK',),)</span>
-<span style="color:red">(('CERAMIC CAKE BOWL + HANGING CAKES',),)</span>
-<span style="color:red">(('CERAMIC CAKE STAND + HANGING CAKES',),)</span>
-<span style="color:red">(('SPACEBOY BIRTHDAY CARD',),)</span>
-<span style="color:red">(('SPACEBOY LUNCH BOX ',),)</span>
+        (('SPACEBOY GIFT WRAP',),)
+        (('REGENCY CAKESTAND 3 TIER',),)
+        (('POSTAGE',),)
+        (('SWEETHEART CERAMIC TRINKET BOX',),)
+        (('STRAWBERRY CERAMIC TRINKET BOX',),)
+        (('PINK HEART SHAPE EGG FRYING PAN',),)
+        (('BIG DOUGHNUT FRIDGE MAGNETS',),)
+        (('PLASTERS IN TIN VINTAGE PAISLEY ',),)
+        (('ROUND SNACK BOXES SET OF4 WOODLAND ',),)
+        (('CERAMIC STRAWBERRY CAKE MONEY BANK',),)
+        (('CERAMIC CAKE BOWL + HANGING CAKES',),)
+        (('CERAMIC CAKE STAND + HANGING CAKES',),)
+        (('SPACEBOY BIRTHDAY CARD',),)
+        (('SPACEBOY LUNCH BOX ',),)
 Frequent pairs:
 (('STRAWBERRY CERAMIC TRINKET BOX',), ('PINK HEART SHAPE EGG FRYING PAN',))
 (('PINK HEART SHAPE EGG FRYING PAN',), ('STRAWBERRY CERAMIC TRINKET BOX',))
@@ -111,12 +111,21 @@ Frequent pairs:
 (('SWEETHEART CERAMIC TRINKET BOX',), ('PLASTERS IN TIN VINTAGE PAISLEY ',))
 (('PLASTERS IN TIN VINTAGE PAISLEY ',), ('SWEETHEART CERAMIC TRINKET BOX',))
 (('POSTAGE',), ('SPACEBOY BIRTHDAY CARD',))
-<span style="color:red">(('SPACEBOY BIRTHDAY CARD',), ('POSTAGE',))</span>
-<span style="color:red">(('POSTAGE',), ('POSTAGE',))</span>
+        (('SPACEBOY BIRTHDAY CARD',), ('POSTAGE',))
+        (('POSTAGE',), ('POSTAGE',))
 (('STRAWBERRY CERAMIC TRINKET BOX',), ('POSTAGE',))
 (('POSTAGE',), ('STRAWBERRY CERAMIC TRINKET BOX',))
-<span style="color:red">(('BIG DOUGHNUT FRIDGE MAGNETS',), ('POSTAGE',))</span>
+        (('BIG DOUGHNUT FRIDGE MAGNETS',), ('POSTAGE',))
 (('POSTAGE',), ('BIG DOUGHNUT FRIDGE MAGNETS',))
-<span style="color:red">(('PLASTERS IN TIN VINTAGE PAISLEY ',), ('POSTAGE',))</span>
+        (('PLASTERS IN TIN VINTAGE PAISLEY ',), ('POSTAGE',))
 (('POSTAGE',), ('PLASTERS IN TIN VINTAGE PAISLEY ',))
+```
 
+## Conclusions
+
+Due to format mismatch it was impossible to test the algorithms with different time gaps. Our implementation uses timestamp (gap in seconds) and original implementation works on discrete time step between events in sequence.
+Original implementation for some reason mines only simngle and two-element sequences. Our implementation is able to mine longer sequences.
+
+## Bibliography
+
+SPADE: An Efficient Algorithm for Mining Frequent Sequences, Zaki, M. J. 2001
