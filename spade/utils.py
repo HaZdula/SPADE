@@ -1,6 +1,7 @@
 import pandas as pd
 from collections import defaultdict
 import time
+import numpy as np
 
 def parse_online_retail(filepath):
     #
@@ -24,7 +25,7 @@ def filter_to_frequent(elements,min_support):
 
     for name,element in elements.items():
         support = len(set([event["sid"] for event in element]))
-        if support > min_support:
+        if support >= min_support:
             subsetted[name] += element
                     
     return subsetted
@@ -148,7 +149,7 @@ def flat_tumple(d):
     for i in d:
         yield from [i] if not isinstance(i, tuple) else flat_tumple(i)
 
-def join(element_i ,element_j):
+def join(element_i ,element_j, min_gap, max_gap):
     
     join_results = defaultdict(list)
     
@@ -156,7 +157,11 @@ def join(element_i ,element_j):
         for event_index_j,event_j in enumerate(element_j):
 
                 sid = event_i["sid"]
-
+                if not (abs(event_i["eid"] - event_j["eid"]) >= min_gap):
+                    continue
+                
+                if not (abs(event_i["eid"] - event_j["eid"]) <= max_gap):
+                    continue
                 # (xy)
                 if event_i["eid"] > event_j["eid"]:
                     merged_seq = event_j["seq"] + (event_i["seq"][-1],)
@@ -195,7 +200,7 @@ def join(element_i ,element_j):
     return join_results
 
 
-def generate_freq_recursive(elements,min_support, max_depth = 5):
+def generate_freq_recursive(elements,min_support, max_depth = 5, min_gap=0, max_gap=np.inf):
 
     frequent_elements = defaultdict(list)
 
@@ -206,7 +211,7 @@ def generate_freq_recursive(elements,min_support, max_depth = 5):
         for element_index_j,seq_j in enumerate(list(elements.keys())[element_index_i+1:]):
             if len(tuple(flat_tumple(seq_i + seq_j))) > max_depth +1:
                 continue
-            R = join(elements[seq_i],elements[seq_j])
+            R = join(elements[seq_i],elements[seq_j], min_gap, max_gap)
 
             for seq,element in R.items():
                 support = len(set([event["sid"] for event in element]))

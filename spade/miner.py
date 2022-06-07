@@ -1,8 +1,9 @@
 from collections import defaultdict
 from utils import *
 import argparse, sys
+import numpy as np
 
-def mine(df, min_support, max_depth):
+def mine(df, min_support, max_depth, min_gap, max_gap):
     # df with columns Id, Date, Products
 
     # key is tuple of elements
@@ -24,7 +25,7 @@ def mine(df, min_support, max_depth):
     # get freq sets
     for two_seq in doublets:
 
-        R = join(freq_single_elements[(two_seq[0],)],freq_single_elements[(two_seq[1],)])
+        R = join(freq_single_elements[(two_seq[0],)],freq_single_elements[(two_seq[1],)], min_gap, max_gap)
 
         for seq,element in R.items():
             support = len(set([event["sid"] for event in element]))
@@ -32,7 +33,7 @@ def mine(df, min_support, max_depth):
                 freq_double_elements[seq].extend(element)
 
     
-    freq = generate_freq_recursive(freq_double_elements,min_support, max_depth)
+    freq = generate_freq_recursive(freq_double_elements,min_support, max_depth, min_gap, max_gap)
 
     print("Frequent single sets:")
     for key in freq_single_elements.keys():
@@ -55,12 +56,15 @@ def main(argv):
     parser.add_argument('--dataset',dest='df_filename',help='Filename of Online Retail Dataset II',required=True)
     parser.add_argument('--support',dest='min_support',type=int,help='Minimum support',required=True)
     parser.add_argument('--max-depth',dest='max_depth',type=int,help='Maximum lenght',required=True)
+    parser.add_argument('--min-gap',dest='min_gap',type=int,help='Minimum gap', default=0 , required=False)
+    parser.add_argument('--max-gap',dest='max_gap',type=int,help='Maximum gap', default=np.inf, required=False)
+    
     args = parser.parse_args(argv)
     
     # limit for testing
     df = parse_online_retail(args.df_filename).iloc[:50,:]
 
-    mine(df, args.min_support, args.max_depth)
+    mine(df, args.min_support, args.max_depth, args.min_gap, args.max_gap)
 
 
 if __name__ == "__main__":
