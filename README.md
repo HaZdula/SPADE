@@ -1,9 +1,10 @@
 # SPADE
 
-[MED] SPADE implementation based on (Zaki, M. J. 2001):
-Agorithm finds frequent sequences in transaction list.
+[MED] SPADE implementation based on (Zaki, M. J. 2001).
 
-## Algorithm structure
+SPADE agorithm eficiently mines frequent sequences.
+
+## Algorithm steps
 
 1. Identification of single frequent elements.
 2. Identification of frequent two-element sequences.
