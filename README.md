@@ -12,7 +12,7 @@ Contains our implementation of the SPADE agorithm. Code is split in two files:
 
   - ```--dataset``` STR Path to dataset
   - ```--support``` INT Minimum support
-  - ```--max-depth``` INT Maximum lenght
+  - ```--max-depth``` INT Maximum lenght of candidate sequence
 
 ## Directory /datasets
 

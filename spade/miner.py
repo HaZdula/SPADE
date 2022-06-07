@@ -58,7 +58,7 @@ def main(argv):
     args = parser.parse_args(argv)
     
     # limit for testing
-    df = parse_online_retail(args.df_filename).iloc[:20,:]
+    df = parse_online_retail(args.df_filename).iloc[:50,:]
 
     mine(df, args.min_support, args.max_depth)
 
